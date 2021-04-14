@@ -1,3 +1,6 @@
 .calculator div {
   text-align: center;
 }
+.mem {
+    float:left;
+}

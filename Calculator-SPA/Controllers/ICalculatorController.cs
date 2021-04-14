@@ -14,7 +14,7 @@ namespace CalculatorApi.Controllers
         [HttpGet]
         public List<string> Get()
         {
-            return new List<string> { "add", "div", "sqrt" };
+            return new List<string> { "add", "sub", "mult", "div", "sqrt" };
         }
 
         [HttpGet("{opr}/{a}/{b}")]
@@ -25,6 +25,14 @@ namespace CalculatorApi.Controllers
             if (opr == "add")
             {
                 return varA + varB;
+            }
+            else if (opr == "sub")
+            {
+                return varA - varB;
+            }
+            else if (opr == "mult")
+            {
+                return varA * varB;
             }
             else if (opr == "div")
             {

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { APP_BASE_HREF } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -14,11 +16,12 @@ export class HomeComponent {
   opr = "";
   http: HttpClient;
   operations: string[];
-  baseUrl: string;
+  baseUrl = environment.apiUrl;
 
   constructor(http: HttpClient) {
     this.http = http;
-    this.http.get<string[]>('https://localhost:44389/api/ICalculator').subscribe(result => {
+    console.log(this.baseUrl);
+    this.http.get<string[]>(this.baseUrl + 'ICalculator').subscribe(result => {
       this.operations = result;
     }, error => console.error(error));
   }
@@ -36,12 +39,13 @@ export class HomeComponent {
       this.oprImg = " / ";
     } else if (operation == "add") {
       this.oprImg = " + ";
-    } else if (operation == '*') {
+    } else if (operation == 'mul') {
       this.oprImg = " * ";
-    } else if (operation == '-') {
+    } else if (operation == 'sub') {
       this.oprImg = " - ";
     } else if (operation == 'sqrt') {
-      this.oprImg = " sqrt ";
+      this.oprImg = " ^ ";
+      this.inBox = 0.5; 
     }
   }
   clear() {
@@ -54,7 +58,7 @@ export class HomeComponent {
     }
   }
   equals() {
-    this.http.get<number>('https://localhost:44389/api/ICalculator' + '/' + this.opr + '/' + this.inMem + '/' + this.inBox).subscribe(
+    this.http.get<number>(this.baseUrl + 'ICalculator' + '/' + this.opr + '/' + this.inMem + '/' + this.inBox).subscribe(
       result => {
         this.inMem = result;
       },
